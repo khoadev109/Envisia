@@ -12,6 +12,11 @@ const Routing: Routes = [
       import('../modules/account/account.module').then((m) => m.AccountModule),
   },
   {
+    path: 'formula',
+    loadChildren: () =>
+      import('./formula/formula.module').then((m) => m.FormulaModule),
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',
