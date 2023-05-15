@@ -1,6 +1,5 @@
 using Envisia.Core;
 using Envisia.Infrastructure;
-using Envisia.Infrastructure.Background;
 using Envisia.Infrastructure.Persistance;
 using Envisia.Library;
 using Envisia.Library.Attributes;
@@ -59,7 +58,7 @@ services.AddEndpointsApiExplorer();
 services.AddMemoryCache();
 services.AddSwagger("Envisia API");
 services.AddApplication();
-services.AddInfrastructure(configuration);
+services.AddInfrastructure();
 services.AddScoped<JwtResolver>();
 services.AddScoped<RsaResolver>();
 
@@ -79,8 +78,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseHangFire(configuration);
 
 app.MapControllers();
 

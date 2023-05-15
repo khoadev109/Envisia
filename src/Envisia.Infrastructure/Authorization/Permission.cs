@@ -3,6 +3,7 @@
     public enum Permission
     {
         Admin = 1,
-        User = 2
+        User = 2,
+        AdminOrUser = 3,
     }
 }

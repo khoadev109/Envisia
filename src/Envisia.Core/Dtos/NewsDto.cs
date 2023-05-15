@@ -8,11 +8,11 @@
 
         public string Subject { get; set; }
 
-        public string NewsContent { get; set; }
+        public string Content { get; set; }
 
         public string? SourceUrl { get; set; } = string.Empty;
 
-        public int FeedId { get; set; }
+        public int? FeedId { get; set; }
 
         public int? OrganisationId { get; set; }
 

@@ -1,10 +1,12 @@
 ﻿using Envisia.Application.Dtos;
 using Envisia.Application.Interfaces.Services;
+using Envisia.Infrastructure.Authorization;
 using Envisia.Library;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Envisia.Api.Controllers
 {
+    [HasPermission(Permission.AdminOrUser)]
     public class OrganisationController : EnvisiaControllerBase
     {
         private readonly IOrganisationService _organisationService;

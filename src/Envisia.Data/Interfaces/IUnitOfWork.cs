@@ -20,7 +20,7 @@ namespace Envisia.Data.Interfaces
 
         IFormulaRepository FormulaRepository { get; }
 
-        INewsRepository NewsRepository { get; }
+        IRepository<News> NewsRepository { get; }
 
         IRepository<Feed> FeedRepository { get; }
 

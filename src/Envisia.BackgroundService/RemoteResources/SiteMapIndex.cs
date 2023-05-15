@@ -1,7 +1,6 @@
-﻿using Envisia.Data.Entities;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
-namespace Envisia.Infrastructure.Background.RemoteResources
+namespace Envisia.BackgroundService.RemoteResources
 {
     [XmlRoot("sitemapindex", Namespace = "http://www.sitemaps.org/schemas/sitemap/0.9")]
     public class SiteMapIndex

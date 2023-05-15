@@ -1,43 +1,45 @@
-﻿using Envisia.Application.Interfaces.Background;
-using Envisia.Core.BackgroundModels;
+﻿using Envisia.BackgroundService.RemoteResources;
 using Envisia.Data.Entities;
-using Envisia.Data.Interfaces;
-using Envisia.Infrastructure.Background.RemoteResources;
 using Envisia.Infrastructure.Persistance;
 using Envisia.Library.Extensions;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Net.Http.Headers;
+using System.Web;
 using System.Xml.Serialization;
 
-namespace Envisia.Infrastructure.Background
+namespace Envisia.BackgroundService.Syncing
 {
-    public class FeedResourceService : IFeedResourceService
+    public class FeedService : IFeedService
     {
         private readonly IConfiguration _configuration;
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly ApplicationDbContext _dbContext;
 
-        public FeedResourceService(IHttpClientFactory httpClientFactory, IConfiguration configuration, ApplicationDbContext dbContext)
+        public FeedService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _configuration = configuration;
             _httpClientFactory = httpClientFactory;
-            _dbContext = dbContext;
         }
 
-        public async Task<List<FeedModel>> StartSyncingAsync()
+        public async Task StartSyncing()
         {
-            List<FeedModel> feeds = await FetchFeedSourceAsync();
+            try
+            {
+                List<FeedModel> feeds = await FetchFeedSourceAsync();
 
-            await SaveFeedsAndNewsAsync(feeds);
+                await ClearFeedsAndNewsInDb();
 
-            return feeds;
+                await SaveFeedToDbAsync(feeds);
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private async Task<List<FeedModel>> FetchFeedSourceAsync()
         {
             var feedModels = new List<FeedModel>();
 
-            var feedUrl = _configuration.GetSection("FeedHangfire:FeedSourceUrl").Get<string>();
+            var feedUrl = _configuration.GetSection("Feed:SourceUrl").Get<string>();
             var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, feedUrl)
             {
                 Headers =
@@ -53,31 +55,34 @@ namespace Envisia.Infrastructure.Background
             {
                 using var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
 
-                try
+                XmlSerializer serializer = new(typeof(SiteMapIndex));
+
+                SiteMapIndex feedSource = (SiteMapIndex)serializer.Deserialize(contentStream);
+
+                foreach (var siteMap in feedSource.SiteMaps)
                 {
-                    XmlSerializer serializer = new(typeof(SiteMapIndex));
-
-                    SiteMapIndex feedSource = (SiteMapIndex)serializer.Deserialize(contentStream);
-
-                    foreach (var siteMap in feedSource.SiteMaps)
+                    var feedModel = new FeedModel
                     {
-                        var feedModel = new FeedModel
-                        {
-                            LastModified = siteMap.LastModified,
-                            Url = siteMap.Location
-                        };
+                        LastModified = siteMap.LastModified,
+                        Url = siteMap.Location
+                    };
 
-                        IEnumerable<FeedUrlModel> childModelUrls = await FetchFeedSourceUrlsAsync(siteMap.Location);
+                    var queryString = "?" + siteMap.Location.Split('?')[1];
 
-                        feedModel.Urls.AddRange(childModelUrls);
+                    var queryStringNameValues = HttpUtility.ParseQueryString(queryString);
 
-                        feedModels.Add(feedModel);
+                    var page = int.Parse(queryStringNameValues["currentPage"]);
+
+                    if (page > 5)
+                    {
+                        return feedModels;
                     }
-                }
-                catch (Exception ex)
-                {
 
-                    throw;
+                    IEnumerable<FeedUrlModel> childModelUrls = await FetchFeedSourceUrlsAsync(siteMap.Location);
+
+                    feedModel.Urls.AddRange(childModelUrls);
+
+                    feedModels.Add(feedModel);
                 }
             }
 
@@ -131,52 +136,59 @@ namespace Envisia.Infrastructure.Background
             return feedModelUrls;
         }
 
-        private async Task SaveFeedsAndNewsAsync(List<FeedModel> feedModels)
+        private async Task SaveFeedToDbAsync(List<FeedModel> feedModels)
         {
-            try
+            using var dbContext = new ApplicationDbContext();
+
+            foreach (FeedModel feedModel in feedModels)
             {
-                foreach (var feedModel in feedModels)
+                var feed = new Feed
                 {
-                    var newsList = ConvertFeedUrlsToNewsList(feedModel.Urls);
+                    LastModifiedDate = feedModel.LastModified,
+                    SourceUrl = feedModel.Url
+                };
 
-                    var feed = new Feed
-                    {
-                        LastModifiedDate = feedModel.LastModified,
-                        SourceUrl = feedModel.Url,
-                        NewsList = newsList
-                    };
+                feed.NewsList = ConvertFeedUrlModelsToNewsList(feedModel.Urls);
 
-                    await _dbContext.Feeds.AddAsync(feed);
-                }
-
-                await _dbContext.SaveChangesAsync();
+                await dbContext.AddAsync(feed);
             }
-            catch (Exception ex)
-            {
 
-            }
+            await dbContext.SaveChangesAsync();
         }
 
-        private List<News> ConvertFeedUrlsToNewsList(IEnumerable<FeedUrlModel> urls)
+        private List<News> ConvertFeedUrlModelsToNewsList(List<FeedUrlModel> feedUrlModels)
         {
             var newsList = new List<News>();
 
-            foreach (var url in urls)
+            foreach (var feedUrlModel in feedUrlModels)
             {
-                var splitBySplash = url.Url.Split('/');
-                var subject = splitBySplash[^1].GetTextFromQueryString();
+                var splitBySplash = feedUrlModel.Url.Split('/');
+
+                var titleQueryString = splitBySplash[splitBySplash.Length - 1];
 
                 var news = new News
                 {
-                    DateTimeFrom = url.LastModified,
-                    SourceUrl = url.Url,
-                    Subject = subject
+                    DateTimeFrom = feedUrlModel.LastModified,
+                    SourceUrl = feedUrlModel.Url,
+                    Subject = titleQueryString.GetTextFromQueryString(),
+                    CreatedBy = "TOAA"
                 };
 
                 newsList.Add(news);
             }
 
             return newsList;
+        }
+
+        private async Task ClearFeedsAndNewsInDb()
+        {
+            using var dbContext = new ApplicationDbContext();
+
+            dbContext.Feeds.RemoveRange(dbContext.Feeds);
+            
+            dbContext.News.RemoveRange(dbContext.News);
+
+            await dbContext.SaveChangesAsync();
         }
     }
 }

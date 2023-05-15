@@ -1,12 +1,12 @@
 ﻿using Envisia.Application.Dtos;
 using Envisia.Application.Interfaces.Services;
+using Envisia.Infrastructure.Authorization;
 using Envisia.Library;
 using Microsoft.AspNetCore.Mvc;
-using System.Drawing;
-using System.Security.Cryptography;
 
 namespace Envisia.Api.Controllers
 {
+    [HasPermission(Permission.AdminOrUser)]
     public class FormulaController : EnvisiaControllerBase
     {
         private readonly IFormulaService _formulaService;

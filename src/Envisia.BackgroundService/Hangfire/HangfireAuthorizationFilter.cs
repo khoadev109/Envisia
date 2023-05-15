@@ -1,6 +1,6 @@
 ﻿using Hangfire.Dashboard;
 
-namespace Envisia.Infrastructure.Background
+namespace Envisia.BackgroundService.Hangfire
 {
     public class HangfireAuthorizationFilter : IDashboardAuthorizationFilter
     {

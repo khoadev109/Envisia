@@ -1,9 +1,10 @@
 export interface News {
     dateTimeFrom?: Date;
-    dateTime?: Date;
+    dateTimeTo?: Date;
     subject?: string;
-    newsContent?: string;
+    content?: string;
     sourceUrl?: string;
+    feedId?: number;
     organisationId?: number;
     marketId?: number;
     storeId?: number;

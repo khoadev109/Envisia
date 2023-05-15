@@ -7,17 +7,12 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Formula } from 'src/app/models/formula.model';
+import { News } from 'src/app/models/news.model';
 import { Organisation } from 'src/app/models/organisation.model';
 import { Store } from 'src/app/models/store.model';
 import { CommonService } from 'src/app/services/common.service';
 
 declare const google: any;
-
-type Notification = {
-  date: string;
-  subject?: string;
-  content?: string;
-};
 
 @Component({
   selector: 'app-dashboard',
@@ -31,28 +26,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   organisations: Organisation[];
   formulas: Formula[];
   stores: Store[];
-
-  notifications: Notification[] = [
-    {
-      date: '11/5/2023',
-      subject: 'Abdijstraat 2, KAPELLE, NL',
-      content: 'Start bouw Aldi supermarkt. Projectnummer: 552291.',
-    },
-    {
-      date: '1/5/2023',
-      subject: 'Prins Bernhardstraat 9, KOUDEKERK AAN DEN RIJN, NL',
-      content: 'Opening Hoogvliet in Koudekerk aan den Rijn.',
-    },
-    {
-      date: '26/4/2023',
-      content:
-        'Carrefour heeft in het eerste kwartaal de omzet in België op vergelijkbare basis met 9,9 procent opgekrikt tot 1,087 miljard euro.',
-    },
-  ];
-
-  formulaAutoListId = 'formula-auto';
-  orgAutoListId = 'org-auto';
-  storeAutoListId = 'store-auto';
+  newsList: News[];
 
   logoSrc: string | SafeUrl = '';
 
@@ -64,6 +38,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.loadSelectList();
+    this.loadAllNews();
   }
 
   ngAfterViewInit(): void {
@@ -92,6 +67,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     this.commonService.getStores().subscribe((result: Store[]) => {
       this.stores = result;
+      this.changeDetectorRef.detectChanges();
+    });
+  }
+
+  loadAllNews() {
+    this.commonService.getAllNews().subscribe((result: News[]) => {
+      this.newsList = result;
       this.changeDetectorRef.detectChanges();
     });
   }

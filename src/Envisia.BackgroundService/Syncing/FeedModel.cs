@@ -1,4 +1,4 @@
-﻿namespace Envisia.Core.BackgroundModels
+﻿namespace Envisia.BackgroundService.Syncing
 {
     public class FeedModel
     {

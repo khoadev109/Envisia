@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace Envisia.Infrastructure.Background.RemoteResources
+namespace Envisia.BackgroundService.RemoteResources
 {
     [XmlRoot("urlset", Namespace = "http://www.sitemaps.org/schemas/sitemap/0.9")]
     public class UrlSet

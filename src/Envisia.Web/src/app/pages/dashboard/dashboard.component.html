@@ -68,17 +68,17 @@
           </h3>
         </div>
         <div class="card-body p-9">
-          <div class="row mb-8" *ngFor="let notification of notifications">
+          <div class="row mb-8" *ngFor="let news of newsList">
             <div class="col-lg-3">
-              <span class="text-gray-400 fw-bold">{{ notification.date }}</span>
+              <span class="text-gray-400 fw-bold">{{ news.dateTimeFrom }}</span>
             </div>
             <div class="col-lg-9">
               <div class="flex-grow-1 me-2">
                 <span class="text-muted fw-bold d-block fs-7 mb-2">{{
-                  notification.subject
+                  news.subject
                 }}</span>
-                <span class="text-gray-800 text-hover-primary fs-6 fw-bolder">
-                  {{ notification.content }}
+                <span class="text-gray-800 text-hover-primary fs-6 fw-bolder" *ngIf="news.content">
+                  {{ news.content }}
                 </span>
               </div>
             </div>

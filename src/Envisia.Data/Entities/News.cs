@@ -14,7 +14,7 @@ namespace Envisia.Data.Entities
 
         public string SourceUrl { get; set; }
 
-        public int FeedId { get; set; }
+        public int? FeedId { get; set; }
 
         public Feed Feed { get; set; }
 
