@@ -1,0 +1,121 @@
+<div class="card mb-5 mb-xl-10">
+  <div
+    class="card-header border-0 cursor-pointer"
+    role="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#kt_account_profile_details"
+    aria-expanded="true"
+    aria-controls="kt_account_profile_details"
+  >
+    <div class="card-title m-0">
+      <h3
+        class="fw-bolder m-0"
+        translate="PAGES.SETTINGS.PROFILE_DETAILS.PROFILE_DETAILS"
+      ></h3>
+    </div>
+  </div>
+  <div id="kt_account_profile_details" class="collapse show">
+    <form novalidate="" class="form">
+      <div class="card-body border-top p-9">
+        <div class="row mb-6 temp-hidden">
+          <label
+            class="col-lg-4 col-form-label fw-bold fs-6"
+            translate="PAGES.SETTINGS.PROFILE_DETAILS.AVATAR"
+          ></label>
+          <div class="col-lg-8">
+            <div
+              class="image-input image-input-outline"
+              data-kt-image-input="true"
+              [style.background-image]="'url(./assets/media/avatars/blank.png)'"
+            >
+              <div
+                class="image-input-wrapper w-125px h-125px"
+                [style.background-image]="
+                  'url(./assets/media/avatars/150-2.jpg)'
+                "
+              ></div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label
+            class="col-lg-4 col-form-label required fw-bold fs-6"
+            translate="PAGES.SETTINGS.PROFILE_DETAILS.DISPLAY_NAME"
+          ></label>
+          <div class="col-lg-8 fv-row">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid"
+              placeholder="Display name"
+              name="displayName"
+              [(ngModel)]="user.displayName"
+            />
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label
+            class="col-lg-4 col-form-label required fw-bold fs-6"
+            translate="PAGES.SETTINGS.PROFILE_DETAILS.FULL_NAME"
+          ></label>
+          <div class="col-lg-8">
+            <div class="row">
+              <div class="col-lg-6 fv-row">
+                <input
+                  type="text"
+                  class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                  placeholder="First name"
+                  name="fName"
+                  [(ngModel)]="user.firstName"
+                />
+              </div>
+              <div class="col-lg-6 fv-row">
+                <input
+                  type="text"
+                  class="form-control form-control-lg form-control-solid"
+                  placeholder="Last name"
+                  name="lName"
+                  [(ngModel)]="user.lastName"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label
+            class="col-lg-4 col-form-label required fw-bold fs-6"
+            translate="PAGES.SETTINGS.PROFILE_DETAILS.EMAIL"
+          ></label>
+          <div class="col-lg-8 fv-row">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid"
+              placeholder="Email"
+              name="email"
+              [(ngModel)]="user.email"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="card-footer d-flex justify-content-end py-6 px-9">
+        <button type="button" class="btn btn-primary" [disabled]="isLoading">
+          <ng-container
+            *ngIf="!isLoading"
+            translate="PAGES.SETTINGS.PROFILE_DETAILS.SAVE_CHANGES"
+          ></ng-container>
+          <ng-container *ngIf="isLoading">
+            <span
+              clas="indicator-progress"
+              [style.display]="'block'"
+              translate="PAGES.SETTINGS.PROFILE_DETAILS.PLEASE_WAIT"
+            >
+              {{ " " }}
+              <span
+                class="spinner-border spinner-border-sm align-middle ms-2"
+              ></span>
+            </span>
+          </ng-container>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

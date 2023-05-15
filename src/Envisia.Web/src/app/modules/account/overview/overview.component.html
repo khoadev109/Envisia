@@ -1,0 +1,59 @@
+<div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+  <div class="card-header cursor-pointer">
+    <div class="card-title m-0">
+      <h3 class="fw-bolder m-0" translate="PAGES.OVERVIEW.PROFILE_DETAILS"></h3>
+    </div>
+
+    <a
+      routerLink="/management/account/settings"
+      class="btn btn-primary align-self-center"
+      translate="PAGES.OVERVIEW.EDIT_PROFILE"
+    >
+    </a>
+  </div>
+
+  <div class="card-body p-9">
+    <div class="row mb-7">
+      <label
+        class="col-lg-4 fw-bold text-muted"
+        translate="PAGES.OVERVIEW.DISPLAY_NAME"
+      ></label>
+
+      <div class="col-lg-8">
+        <span class="fw-bolder fs-6 text-dark">{{ user.displayName }}</span>
+      </div>
+    </div>
+    <div class="row mb-7">
+      <label
+        class="col-lg-4 fw-bold text-muted"
+        translate="PAGES.OVERVIEW.FIRST_NAME"
+      ></label>
+
+      <div class="col-lg-8">
+        <span class="fw-bolder fs-6 text-dark">{{ user.firstName }}</span>
+      </div>
+    </div>
+
+    <div class="row mb-7">
+      <label
+        class="col-lg-4 fw-bold text-muted"
+        translate="PAGES.OVERVIEW.LAST_NAME"
+      ></label>
+
+      <div class="col-lg-8 fv-row">
+        <span class="fw-bold fs-6">{{ user.lastName }}</span>
+      </div>
+    </div>
+
+    <div class="row mb-7">
+      <label
+        class="col-lg-4 fw-bold text-muted"
+        translate="PAGES.OVERVIEW.EMAIL"
+      ></label>
+
+      <div class="col-lg-8 fv-row">
+        <span class="fw-bold fs-6">{{ user.email }}</span>
+      </div>
+    </div>
+  </div>
+</div>

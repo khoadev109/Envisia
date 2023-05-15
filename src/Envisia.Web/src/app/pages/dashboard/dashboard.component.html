@@ -1,0 +1,92 @@
+<div class="container">
+  <div class="row mt-4">
+    <!-- begin::Map-->
+    <div class="col-lg-12">
+      <div class="card mt-5 mb-5 mb-xl-10">
+        <div class="map" #mapElement></div>
+      </div>
+    </div>
+    <!-- end::Map-->
+  </div>
+
+  <div class="row">
+    <!-- begin::Selections-->
+    <div class="col-lg-3">
+      <div class="card mb-5 mb-xl-10">
+        <div class="card-body border-top p-9">
+          <div class="d-flex align-items-start flex-column gap-5">
+            <select class="form-select form-select-solid" name="formulas">
+              <option value="0">Select formula</option>
+              <option
+                *ngFor="let formula of formulas"
+                [value]="formula.id"
+                [text]="formula.name"
+              ></option>
+            </select>
+
+            <select class="form-select form-select-solid" name="formulas">
+              <option value="0">Select place</option>
+              <option
+                *ngFor="let organisation of organisations"
+                [value]="organisation.id"
+                [text]="organisation.name"
+              ></option>
+            </select>
+
+            <select class="form-select form-select-solid" name="formulas">
+              <option value="0">Select store</option>
+              <option
+                *ngFor="let store of stores"
+                [value]="store.id"
+                [text]="store.storeName"
+              ></option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end::Selections -->
+
+    <!-- begin::Content-->
+    <div class="col-lg-9">
+      <!-- begin::Logo-->
+      <div class="card mb-5 mb-xl-10">
+        <img
+          class="image-input-wrapper w-100% h-257px"
+          style="background-size: cover; border-radius: 10px"
+          src="./assets/media/sampleLogo.jpg"
+          avatar="logo"
+        />
+      </div>
+      <!-- end::Logo-->
+
+      <!-- begin::Notifications-->
+      <div class="card mb-5 mb-xl-10">
+        <div class="card-header border-0 pt-5">
+          <h3 class="card-title align-items-start flex-column">
+            <span class="card-label fw-bolder text-dark">Notifications</span>
+          </h3>
+        </div>
+        <div class="card-body p-9">
+          <div class="row mb-8" *ngFor="let notification of notifications">
+            <div class="col-lg-3">
+              <span class="text-gray-400 fw-bold">{{ notification.date }}</span>
+            </div>
+            <div class="col-lg-9">
+              <div class="flex-grow-1 me-2">
+                <span class="text-muted fw-bold d-block fs-7 mb-2">{{
+                  notification.subject
+                }}</span>
+                <span class="text-gray-800 text-hover-primary fs-6 fw-bolder">
+                  {{ notification.content }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end::Notifications-->
+    </div>
+    <!-- end::Content -->
+  </div>
+</div>

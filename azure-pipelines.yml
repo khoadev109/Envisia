@@ -1,0 +1,109 @@
+trigger:
+- develop
+
+pool:
+  vmImage: windows-latest
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+  displayName: 'Install NuGet >=6.3.0-0'
+  inputs:
+    versionSpec: '>=6.3.0-0'
+    checkLatest: true
+
+- task: UseDotNet@2
+  displayName: 'Install .NET Core SDK'
+  inputs:
+    version: 7.x
+    performMultiLevelLookup: true
+    includePreviewVersions: false
+
+
+- task: NuGetCommand@2
+  displayName: NuGet v2 Restore
+  inputs:
+    command: restore
+    restoreSolution: '**/*.sln'
+    feedsToUse: 'select'
+    versioningScheme: 'byBuildNumber'
+    includeNuGetOrg: true
+
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: build
+    projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+
+#- task: DotNetCoreCLI@2
+#  inputs:
+#    command: test
+#    projects: '**/*tests/*.csproj'
+#    arguments: '--configuration $(buildConfiguration)'
+
+#- task: DotNetCoreCLI@2
+#  inputs:
+#    command: test
+#    projects: '**/*tests/*.csproj'
+#    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+
+- task: NodeTool@0
+  inputs:
+    versionSpec: '16.16.0'
+  displayName: 'Install Node.js'
+
+- task: Npm@1
+  displayName: 'Install Angular CLI 15.2.4'
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'install -g @angular/cli@15.2.4'
+
+- task: Npm@1
+  displayName: 'npm install'
+  inputs:
+    command: custom
+    workingDir: '$(System.DefaultWorkingDirectory)/src/Envisia.Web'
+    customCommand: 'install --legacy-peer-deps'
+
+- task: Npm@1
+  displayName: 'Envisia Web Build'
+  inputs:
+    command: custom
+    workingDir: '$(System.DefaultWorkingDirectory)/src/Envisia.Web'
+    verbose: false
+    customCommand: 'run build'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)'
+    artifactName: 'Envisia'
+
+#- task: Docker@2
+#  displayName: Build an image
+#  inputs:
+#    repository: $(imageName)
+#    repository: 'AdvoSecure23'
+#    command: build
+#    Dockerfile: app/AdvoSecure23Dev
+
+#- task: ArchiveFiles@2
+#  displayName: 'Archive Files'
+#  inputs:
+#    rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+#    includeRootFolder: false
+#    archiveType: zip
+#    archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+#    replaceExistingArchive: true
+#- upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+#  artifact: drop

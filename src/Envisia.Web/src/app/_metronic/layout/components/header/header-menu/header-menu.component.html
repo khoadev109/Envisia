@@ -1,0 +1,126 @@
+<!-- Dashboard -->
+<div class="menu-item me-lg-1" *ngIf="showMenu">
+  <a class="menu-link py-3" routerLinkActive="active" routerLink="/dashboard"
+    ><span class="menu-title" translate="MENU.DASHBOARD"></span
+  ></a>
+</div>
+
+<!-- Management -->
+<div
+  class="menu-item menu-lg-down-accordion me-lg-1 menu-dropdown temp-hidden"
+  data-kt-menu-trigger="click"
+  data-kt-menu-placement="bottom-start"
+>
+  <span
+    class="menu-link py-3"
+    [ngClass]="calculateMenuItemCssClass('/management')"
+    ><span class="menu-title" translate="MENU.MANAGEMENT"></span
+  ></span>
+  <div
+    class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px"
+    data-kt-menu-dismiss="true"
+    data-popper-placement="bottom-start"
+  >
+    <div
+      class="menu-item menu-lg-down-accordion me-lg-1"
+      data-kt-menu-trigger="{default:'click', lg: 'hover'}"
+      data-kt-menu-placement="right-start"
+    >
+      <div
+        class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px"
+        data-kt-menu-dismiss="true"
+      >
+        <div
+          class="menu-item menu-lg-down-accordion me-lg-1"
+          data-kt-menu-trigger="{default:'click', lg: 'hover'}"
+          data-kt-menu-placement="right-start"
+        >
+          <span
+            class="menu-link py-3"
+            [ngClass]="calculateMenuItemCssClass('/management/pages/profile')"
+            ><span class="menu-bullet"
+              ><span class="bullet bullet-dot"></span></span
+            ><span
+              class="menu-title"
+              data-link="/management/pages/profile"
+              translate="MENU.PROFILE"
+            ></span
+            ><span class="menu-arrow"></span
+          ></span>
+          <div
+            class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px"
+            data-kt-menu-dismiss="true"
+          >
+            <div class="menu-item me-lg-1">
+              <a
+                class="menu-link py-3"
+                routerLinkActive="active"
+                routerLink="/management/pages/profile/overview"
+                ><span class="menu-bullet"
+                  ><span class="bullet bullet-dot"></span></span
+                ><span class="menu-title" translate="MENU.OVERVIEW"></span
+              ></a>
+            </div>
+
+            <!-- <div class="menu-item me-lg-1">
+              <a
+                class="menu-link py-3"
+                routerLinkActive="active"
+                routerLink="/management/pages/profile/connections"
+                ><span class="menu-bullet"
+                  ><span class="bullet bullet-dot"></span></span
+                ><span class="menu-title">Connections</span></a
+              >
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="menu-item menu-lg-down-accordion me-lg-1"
+      data-kt-menu-trigger="{default:'click', lg: 'hover'}"
+      data-kt-menu-placement="right-start"
+    >
+      <span
+        class="menu-link py-3"
+        [ngClass]="calculateMenuItemCssClass('/management/account')"
+        ><span class="menu-icon"><i class="bi fs-3 bi-person"></i></span
+        ><span
+          class="menu-title"
+          data-link="/management/account"
+          translate="MENU.ACCOUNTS"
+        ></span
+        ><span class="menu-arrow"></span
+      ></span>
+      <div
+        class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px"
+        data-kt-menu-dismiss="true"
+      >
+        <div class="menu-item me-lg-1">
+          <a
+            class="menu-link py-3"
+            routerLinkActive="active"
+            routerLink="/management/account/overview"
+            ><span class="menu-bullet"
+              ><span class="bullet bullet-dot"></span></span
+            ><span class="menu-title" translate="MENU.OVERVIEW"
+              ></span
+            ></a
+          >
+        </div>
+        <div class="menu-item me-lg-1">
+          <a
+            class="menu-link py-3"
+            routerLinkActive="active"
+            routerLink="/management/account/settings"
+            ><span class="menu-bullet"
+              ><span class="bullet bullet-dot"></span></span
+            ><span class="menu-title" translate="MENU.SETTINGS"
+              ></span
+            ></a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
