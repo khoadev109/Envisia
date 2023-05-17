@@ -4,6 +4,7 @@ using Envisia.Application.Interfaces.Services;
 using Envisia.Data.Entities;
 using Envisia.Data.Interfaces;
 using Envisia.Library;
+using Microsoft.EntityFrameworkCore;
 
 namespace Envisia.Application.Services
 {
@@ -22,7 +23,11 @@ namespace Envisia.Application.Services
         {
             ServiceResult<IEnumerable<NewsDto>> result = await ExecuteAsync<IEnumerable<NewsDto>>(async () =>
             {
-                IEnumerable<News> news = await _unitOfWork.NewsRepository.GetAllAsync();
+                IEnumerable<News> news =  await _unitOfWork.NewsRepository.GetQueryable()
+                    .Include(x => x.Store)
+                    .Include(x => x.Formula)
+                    .Include(x=> x.Feed)
+                    .ToListAsync();
 
                 IEnumerable<NewsDto> newsDtos = _mapper.Map<IEnumerable<NewsDto>>(news);
 

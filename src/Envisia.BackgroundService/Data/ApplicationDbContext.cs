@@ -19,8 +19,9 @@ namespace Envisia.Infrastructure.Persistance
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost;Database=Envisia;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
-
+            //optionsBuilder.UseSqlServer("Server=localhost;Database=Envisia;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+            //DOTIN
+            optionsBuilder.UseSqlServer("Server=.;Database=Envisia;User ID=sa;Password=admin@123;MultipleActiveResultSets=true;TrustServerCertificate=True");
             base.OnConfiguring(optionsBuilder);
         }
     }

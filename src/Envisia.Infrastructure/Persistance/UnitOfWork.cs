@@ -26,7 +26,7 @@ namespace Envisia.Infrastructure.Persistance
 
         private IFormulaRepository _formulaRepository;
 
-        private IRepository<News> _newsRepository;
+        private INewsRepository _newsRepository;
 
         private IRepository<Feed> _feedRepository;
 
@@ -71,9 +71,9 @@ namespace Envisia.Infrastructure.Persistance
             get { return _formulaRepository ??= new FormulaRepository(_dbContext); }
         }
 
-        public IRepository<News> NewsRepository
+        public INewsRepository NewsRepository
         {
-            get { return _newsRepository ??= new Repository<News>(_dbContext); }
+            get { return _newsRepository ??= new NewsRepository(_dbContext); }
         }
 
         public IRepository<Feed> FeedRepository

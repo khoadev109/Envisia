@@ -23,6 +23,7 @@ namespace Envisia.Application.Services
         {
             ServiceResult<IEnumerable<FormulaDto>> result = await ExecuteAsync<IEnumerable<FormulaDto>>(async () =>
             {
+                
                 IEnumerable<Formula> formulas = await _unitOfWork.FormulaRepository.GetQueryable().Include(x => x.Logo).ToListAsync();
 
                 IEnumerable<FormulaDto> formulaDtos = _mapper.Map<IEnumerable<FormulaDto>>(formulas);

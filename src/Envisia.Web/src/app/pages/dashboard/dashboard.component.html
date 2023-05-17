@@ -63,7 +63,8 @@
       <!-- begin::Notifications-->
       <div class="card mb-5 mb-xl-10">
         <div class="card-header border-0 pt-5">
-          <h3 class="card-title align-items-start flex-column">
+          <h3 class="card-title justify-content-center flex-row gap-3">
+            <i class="fas fa-newspaper"></i>
             <span class="card-label fw-bolder text-dark">Notifications</span>
           </h3>
         </div>
@@ -74,9 +75,13 @@
             </div>
             <div class="col-lg-9">
               <div class="flex-grow-1 me-2">
-                <span class="text-muted fw-bold d-block fs-7 mb-2">{{
-                  news.subject
-                }}</span>
+                <div class="flex-row gap-3">
+                  <i class="fas fa-shopping-bag"></i>
+                  <span class="text-muted fw-bold fs-7 mb-2 mx-lg-3">{{
+                    news.subject 
+                  }}</span>
+                </div>
+              
                 <span class="text-gray-800 text-hover-primary fs-6 fw-bolder" *ngIf="news.content">
                   {{ news.content }}
                 </span>

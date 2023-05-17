@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Envisia.Core", "src\Envisia
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Envisia.Data", "src\Envisia.Data\Envisia.Data.csproj", "{520AEEE2-A703-47F0-9E88-60C6712A8E65}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Envisia.BackgroundService", "src\Envisia.BackgroundService\Envisia.BackgroundService.csproj", "{C05F3429-7AE0-4B52-ABF8-F837E683B3E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{520AEEE2-A703-47F0-9E88-60C6712A8E65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{520AEEE2-A703-47F0-9E88-60C6712A8E65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{520AEEE2-A703-47F0-9E88-60C6712A8E65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C05F3429-7AE0-4B52-ABF8-F837E683B3E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C05F3429-7AE0-4B52-ABF8-F837E683B3E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C05F3429-7AE0-4B52-ABF8-F837E683B3E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C05F3429-7AE0-4B52-ABF8-F837E683B3E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
