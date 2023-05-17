@@ -1,6 +1,5 @@
 ﻿using Envisia.Application.Dtos;
 using Envisia.Application.Interfaces.Services;
-using Envisia.Application.Services;
 using Envisia.Infrastructure.Authorization;
 using Envisia.Library;
 using Microsoft.AspNetCore.Mvc;
@@ -8,19 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 namespace Envisia.Api.Controllers
 {
     [HasPermission(Permission.AdminOrUser)]
-    public class NewsController : EnvisiaControllerBase
+    public class FeedNewsController : EnvisiaControllerBase
     {
-        private readonly INewsService _newsService;
+        private readonly IFeedNewsService _feedNewsService;
 
-        public NewsController(INewsService newsService)
+        public FeedNewsController(IFeedNewsService feedNewsService)
         {
-            _newsService = newsService;
+            _feedNewsService = feedNewsService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            ServiceResult<IEnumerable<NewsDto>> serviceResult = await _newsService.GetAllAsync();
+            ServiceResult<IEnumerable<FeedDto>> serviceResult = await _feedNewsService.GetAllFeedsAsync();
 
             if (serviceResult.Success)
             {

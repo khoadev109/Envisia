@@ -64,15 +64,15 @@ namespace Envisia.Core
                     .ForMember(x => x.DeletedBy, x => x.Ignore())
                     .ForMember(x => x.DeletedDateTime, x => x.Ignore());
 
+                config.CreateMap<Feed, FeedDto>().ReverseMap()
+                    .ForMember(x => x.Id, x => x.Ignore());
+
                 config.CreateMap<Logo, LogoDto>().ReverseMap()
                     .ForMember(x => x.Id, x => x.Ignore())
                     .ForMember(x => x.ModifiedBy, x => x.Ignore())
                     .ForMember(x => x.ModifiedDateTime, x => x.Ignore())
                     .ForMember(x => x.DeletedBy, x => x.Ignore())
                     .ForMember(x => x.DeletedDateTime, x => x.Ignore());
-
-                config.CreateMap<Feed, FeedDto>().ReverseMap()
-                    .ForMember(x => x.Id, x => x.Ignore());
             });
 
             return services;
@@ -85,7 +85,7 @@ namespace Envisia.Core
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFormulaService, FormulaService>();
             services.AddScoped<IStoreService, StoreService>();
-            services.AddScoped<INewsService, NewsService>();
+            services.AddScoped<IFeedNewsService, FeedNewsService>();
 
             return services;
         }

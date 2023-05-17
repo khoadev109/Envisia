@@ -6,6 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Feed } from 'src/app/models/feed.model';
 import { Formula } from 'src/app/models/formula.model';
 import { News } from 'src/app/models/news.model';
 import { Organisation } from 'src/app/models/organisation.model';
@@ -23,10 +24,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   map: any;
   @ViewChild('mapElement') mapElement: any;
 
+  public feedNewsList: Feed[];
+  public page: number = 1;
+  public count: number = 0;
+  public tableSize: number = 7;
+  public tableSizes: any = [3, 6, 9, 12];
+
   organisations: Organisation[];
   formulas: Formula[];
   stores: Store[];
-  newsList: News[];
 
   logoSrc: string | SafeUrl = '';
 
@@ -38,7 +44,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.loadSelectList();
-    this.loadAllNews();
+    this.loadAllFeedNews();
   }
 
   ngAfterViewInit(): void {
@@ -71,31 +77,21 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     });
   }
 
-  loadAllNews() {
-    this.commonService.getAllNews().subscribe((result: News[]) => {
-      this.newsList = result;
+  loadAllFeedNews() {
+    this.commonService.getAllFeedNews().subscribe((result: Feed[]) => {
+      this.feedNewsList = result;
       this.changeDetectorRef.detectChanges();
     });
   }
 
-  searchFormula(event: any) {
-    const value = event.target.value || '';
-    const formula = this.formulas.find(
-      (x) => x?.name?.toLowerCase() === value.toLowerCase()
-    );
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.loadAllFeedNews();
   }
 
-  searchOrg(event: any) {
-    const value = event.target.value || '';
-    const org = this.organisations.find(
-      (x) => x?.name?.toLowerCase() === value.toLowerCase()
-    );
-  }
-
-  searchStore(event: any) {
-    const value = event.target.value || '';
-    const store = this.stores.find(
-      (x) => x?.storeName?.toLowerCase() === value.toLowerCase()
-    );
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.loadAllFeedNews();
   }
 }

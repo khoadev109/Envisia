@@ -1,8 +1,9 @@
 ﻿using Envisia.Data.Entities;
+using Envisia.Library.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace Envisia.Infrastructure.Persistance
+namespace Envisia.BackgroundService.Data
 {
     public class ApplicationDbContext : DbContext
     {
@@ -19,9 +20,10 @@ namespace Envisia.Infrastructure.Persistance
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer("Server=localhost;Database=Envisia;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
-            //DOTIN
-            optionsBuilder.UseSqlServer("Server=.;Database=Envisia;User ID=sa;Password=admin@123;MultipleActiveResultSets=true;TrustServerCertificate=True");
+            var connectionString = AppSettingsHelper.GetConfiguration().GetConnectionString("AppServer");
+
+            optionsBuilder.UseSqlServer(connectionString);
+
             base.OnConfiguring(optionsBuilder);
         }
     }

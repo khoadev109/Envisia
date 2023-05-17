@@ -1,5 +1,6 @@
 using Envisia.BackgroundService;
 using Envisia.BackgroundService.Hangfire;
+using Envisia.Library.Helpers;
 using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+AppSettingsHelper.Configure(app.Services.GetRequiredService<IConfiguration>());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

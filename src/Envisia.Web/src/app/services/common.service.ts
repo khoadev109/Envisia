@@ -6,6 +6,7 @@ import { Formula } from '../models/formula.model';
 import { Store } from '../models/store.model';
 import { Organisation } from '../models/organisation.model';
 import { News } from '../models/news.model';
+import { Feed } from '../models/feed.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class CommonService {
   private API_ORGANISATION_URL = `${environment.apiUrl}/organisation`;
   private API_FORMULA_URL = `${environment.apiUrl}/formula`;
   private API_STORE_URL = `${environment.apiUrl}/store`;
-  private API_NEWS_URL = `${environment.apiUrl}/news`;
+  private API_FEED_NEWS_URL = `${environment.apiUrl}/feedNews`;
 
   constructor(private httpClient: HttpClient) {
   }
@@ -31,7 +32,7 @@ export class CommonService {
     return this.httpClient.get<Store[]>(this.API_STORE_URL);
   }
 
-  getAllNews() : Observable<News[]> {
-    return this.httpClient.get<News[]>(this.API_NEWS_URL);
+  getAllFeedNews() : Observable<Feed[]> {
+    return this.httpClient.get<Feed[]>(this.API_FEED_NEWS_URL);
   }
 }

@@ -1,6 +1,6 @@
-﻿using Envisia.BackgroundService.RemoteResources;
+﻿using Envisia.BackgroundService.Data;
+using Envisia.BackgroundService.RemoteResources;
 using Envisia.Data.Entities;
-using Envisia.Infrastructure.Persistance;
 using Envisia.Library.Extensions;
 using Microsoft.Net.Http.Headers;
 using System.Web;
@@ -145,10 +145,9 @@ namespace Envisia.BackgroundService.Syncing
                 var feed = new Feed
                 {
                     LastModifiedDate = feedModel.LastModified,
-                    SourceUrl = feedModel.Url
+                    SourceUrl = feedModel.Url,
+                    NewsList = ConvertFeedUrlModelsToNewsList(feedModel.Urls)
                 };
-
-                feed.NewsList = ConvertFeedUrlModelsToNewsList(feedModel.Urls);
 
                 await dbContext.AddAsync(feed);
             }
@@ -160,17 +159,24 @@ namespace Envisia.BackgroundService.Syncing
         {
             var newsList = new List<News>();
 
-            foreach (var feedUrlModel in feedUrlModels)
+            var storeId = new Random().Next(1, 3);
+            var formulaId = new Random().Next(1, 4);
+
+            for (int i = 0; i < feedUrlModels.Count; i++)
             {
+                FeedUrlModel feedUrlModel = feedUrlModels[i];
+
                 var splitBySplash = feedUrlModel.Url.Split('/');
 
-                var titleQueryString = splitBySplash[splitBySplash.Length - 1];
+                var titleQueryString = splitBySplash[^1];
 
                 var news = new News
                 {
                     DateTimeFrom = feedUrlModel.LastModified,
                     SourceUrl = feedUrlModel.Url,
                     Subject = titleQueryString.GetTextFromQueryString(),
+                    StoreId = i < feedUrlModels.Count / 2 - 1 ? storeId : null,
+                    FormulaId = i >= feedUrlModels.Count / 2 ? formulaId : null,
                     CreatedBy = "TOAA"
                 };
 
@@ -185,7 +191,7 @@ namespace Envisia.BackgroundService.Syncing
             using var dbContext = new ApplicationDbContext();
 
             dbContext.Feeds.RemoveRange(dbContext.Feeds);
-            
+
             dbContext.News.RemoveRange(dbContext.News);
 
             await dbContext.SaveChangesAsync();

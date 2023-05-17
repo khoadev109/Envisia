@@ -69,24 +69,53 @@
           </h3>
         </div>
         <div class="card-body p-9">
-          <div class="row mb-8" *ngFor="let news of newsList">
+          <div
+            class="row mb-8"
+            *ngFor="
+              let feedNews of feedNewsList
+                | paginate
+                  : {
+                      itemsPerPage: tableSize,
+                      currentPage: page,
+                      totalItems: count
+                    };
+              let i = index
+            "
+          >
             <div class="col-lg-3">
-              <span class="text-gray-400 fw-bold">{{ news.dateTimeFrom }}</span>
+              <span class="text-gray-400 fw-bold">{{
+                feedNews.lastModifiedDate
+              }}</span>
             </div>
             <div class="col-lg-9">
-              <div class="flex-grow-1 me-2">
+              <div
+                class="flex-grow-1 me-2 mb-4"
+                *ngFor="let news of feedNews.newsList"
+              >
                 <div class="flex-row gap-3">
                   <i class="fas fa-shopping-bag"></i>
                   <span class="text-muted fw-bold fs-7 mb-2 mx-lg-3">{{
-                    news.subject 
+                    news.subject
                   }}</span>
                 </div>
-              
-                <span class="text-gray-800 text-hover-primary fs-6 fw-bolder" *ngIf="news.content">
+                <span
+                  class="text-gray-800 text-hover-primary fs-6 fw-bolder"
+                  *ngIf="news.content"
+                >
                   {{ news.content }}
                 </span>
               </div>
             </div>
+          </div>
+
+          <!-- paging -->
+          <div class="d-flex justify-content-center">
+            <pagination-controls
+              previousLabel="Prev"
+              nextLabel="Next"
+              (pageChange)="onTableDataChange($event)"
+            >
+            </pagination-controls>
           </div>
         </div>
       </div>

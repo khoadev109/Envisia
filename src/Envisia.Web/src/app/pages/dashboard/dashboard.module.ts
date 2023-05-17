@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { NgxTablePaginationModule } from 'ngx-table-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { DashboardComponent } from './dashboard.component';
 import { WidgetsModule } from '../../_metronic/partials';
 
@@ -14,6 +16,8 @@ import { WidgetsModule } from '../../_metronic/partials';
         component: DashboardComponent,
       },
     ]),
+    NgxTablePaginationModule,
+    NgxPaginationModule,
     WidgetsModule,
   ],
 })

@@ -1,5 +1,5 @@
-﻿using Envisia.BackgroundService.Syncing;
-using Envisia.Infrastructure.Persistance;
+﻿using Envisia.BackgroundService.Data;
+using Envisia.BackgroundService.Syncing;
 using Hangfire;
 
 namespace Envisia.BackgroundService.Hangfire

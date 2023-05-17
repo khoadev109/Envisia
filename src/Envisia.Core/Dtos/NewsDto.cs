@@ -22,8 +22,6 @@
 
         public int? FormulaId { get; set; }
 
-        public FeedDto? Feed { get; set; }
-
         public StoreDto? Store { get; set; }
 
         public FormulaDto? Formula { get; set;}
