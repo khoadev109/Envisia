@@ -6,11 +6,11 @@ namespace Envisia.Data.Entities
     {
         public string? StatisticCode { get; set; } = string.Empty;
 
-        public int? PolygonId { get; set; }
+        public int PolygonId { get; set; }
 
         public AreaPolygon Polygon { get; set; }
 
-        public int? StoreId { get; set; }
+        public int StoreId { get; set; }
 
         public Store Store { get; set; }
     }

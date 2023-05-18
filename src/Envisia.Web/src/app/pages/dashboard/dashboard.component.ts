@@ -5,10 +5,9 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { SafeUrl } from '@angular/platform-browser';
 import { Feed } from 'src/app/models/feed.model';
 import { Formula } from 'src/app/models/formula.model';
-import { News } from 'src/app/models/news.model';
 import { Organisation } from 'src/app/models/organisation.model';
 import { Store } from 'src/app/models/store.model';
 import { CommonService } from 'src/app/services/common.service';
@@ -27,7 +26,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   public feedNewsList: Feed[];
   public page: number = 1;
   public count: number = 0;
-  public tableSize: number = 7;
+  public tableSize: number = 3;
   public tableSizes: any = [3, 6, 9, 12];
 
   organisations: Organisation[];
@@ -37,7 +36,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   logoSrc: string | SafeUrl = '';
 
   constructor(
-    private sanitizer: DomSanitizer,
     private commonService: CommonService,
     private changeDetectorRef: ChangeDetectorRef
   ) {}

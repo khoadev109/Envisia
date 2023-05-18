@@ -104,6 +104,17 @@
                 >
                   {{ news.content }}
                 </span>
+                <div class="flex-row gap-3">
+                  <span class="text-dark fw-bold fs-7 mb-2 mx-lg-3">{{
+                    news.subject
+                  }}</span>
+                  <a
+                    [href]="news.sourceUrl"
+                    class="text-dark fw-bolder text-hover-primary fs-8"
+                  >
+                    Read more
+                  </a>
+                </div>
               </div>
             </div>
           </div>

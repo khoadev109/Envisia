@@ -8,7 +8,7 @@ namespace Envisia.Data.Entities
 
         public string? CountryAlpha2 { get; set; } = string.Empty;
 
-        public string? PolygonData { get; set; } = string.Empty;
+        public string PolygonData { get; set; } = string.Empty;
 
         public IList<StoreServiceArea> StoreServiceAreas { get; set; } = new List<StoreServiceArea>();
     }

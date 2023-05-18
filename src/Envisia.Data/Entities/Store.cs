@@ -58,6 +58,8 @@ namespace Envisia.Data.Entities
 
         public IList<StoreFeature> StoreFeatures { get; set; } = new List<StoreFeature>();
 
+        public IList<StoreServiceArea> StoreServiceAreas { get; set; } = new List<StoreServiceArea>();
+
         public IList<News> NewsList { get; set; } = new List<News>();
     }
 }
