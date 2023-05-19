@@ -1,28 +1,57 @@
 <div class="container">
+  <div style="display: flex; flex-direction: row">
+    <div class="rounded-circle p-3 logoAldi">
+      <img src="./icon.png" alt="Aldi Nederland" class="rounded-circle" />
+      <span>Pascalweg 21</span>
+      <span>4104BE CULEMBORG, NL</span>
+    </div>
+    <div class="wrap-contact-info">
+      <a style="color: black" href="call: 0345-478780"
+        ><i style="color: black" class="bi bi-telephone-fill"></i>0345-478780</a
+      >
+      <a style="color: black" href="info@aldi.nl"
+        ><i class="bi bi-envelope"></i> info@aldi.nl</a
+      >
+      <div style="display: flex; flex-direction: row">
+        <div class="border-color">
+          <a href="www.aldi.com"
+            ><i class="fas fa-globe" style="color: red"></i
+          ></a>
+        </div>
+
+        <div class="border-color">
+          <a
+            href="https://www.facebook.com/ALDI-Nederland-1652450291748655/?fref=ts"
+            ><i class="bi bi-facebook" style="color: red"></i
+          ></a>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="card-header card-header-stretch overflow-auto mt-5">
     <div class="col-xs-12">
       <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
           <a
             class="nav-link text-active-primary cursor-pointer"
-            [ngClass]="activeClass('KeyFigures')"
-            (click)="setTab('KeyFigures')"
+            [ngClass]="activeClass('Stats')"
+            (click)="setTab('Stats')"
             data-bs-toggle="tab"
             translate="PAGES.CONTACT.ADDRESS_DATA"
           >
             <i class="bi bi-bar-chart"></i>
-            KeyFigures
+            Stats
           </a>
         </li>
         <li class="nav-item">
           <a
             class="nav-link cursor-pointer"
-            [ngClass]="activeClass('Officers')"
-            (click)="setTab('Officers')"
+            [ngClass]="activeClass('Contacts')"
+            (click)="setTab('Contacts')"
             role="tab"
           >
             <i class="bi bi-person"></i>
-            Officers
+            Contacts
           </a>
         </li>
         <li class="nav-item">
@@ -39,11 +68,7 @@
       </ul>
     </div>
   </div>
-  <div
-    class="tab-pane fade"
-    [ngClass]="activeClass('KeyFigures')"
-    id="KeyFigures"
-  >
+  <div class="tab-pane fade" [ngClass]="activeClass('Stats')" id="Stats">
     <div class="d-flex justify-content-between card-header border-0">
       <div class="card-header border-0">
         <div class="card-title m-0">
@@ -52,38 +77,167 @@
       </div>
       <div>
         <select class="form-select" aria-label="Default select example">
-          <option selected>Open this select menu</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+          <option selected>Branch stores</option>
+          <option value="1">Omzet</option>
+          <option value="2">Marktaandeel IRI</option>
+          <option value="3">Marktaandeel Nielsen</option>
         </select>
       </div>
-      <div class="dropdown">
-        <button class="btn btn-secondary" type="button">Export</button>
+      <div class="export-btn" (click)="exportToExcel()">
+        <div>
+          <button class="color-btn btn" type="button">Export</button>
+        </div>
+        <div class="icon-export">
+          <button class="btn">
+            <i class="bi bi-cloud-download color-icon"></i>
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col left"></div>
-    <div class="col right">
-      <div class="card-header border-0">
-        <div class="card-title m-0">
-          <h4>Top 10 VVO</h4>
-          <div class="row align-items-center">
-            <div class="col-sm-1">1</div>
-            <div class="col-sm-7">
-              <div>Aldi</div>
-              <div>
-                <p>
-                  <i class="fas fa-map-marker-alt"></i> Schuttersveld 3, 7514AC
-                  ENSCHEDE, NL
-                </p>
-              </div>
+    <div class="content">
+      <div class="row-content">
+        <div class="wrap-chart">
+          <div class="chart" id="chart"></div>
+          <div style="display: flex; flex-direction: row">
+            <div class="content-bottom-text">
+              <span>ORGANIZATION</span>
+              <span style="font-size: xx-large"
+                >Aldi <br /><span>Nederland</span></span
+              >
+              <span>GEMIDDELD VVO</span>
+              <span>924m<sup>2</sup></span>
+              <span>COUNTRIES</span>
+              <span>Rural</span>
             </div>
-            <div class="col-sm-4">2400 m<sup>2</sup></div>
+            <div
+              style="
+                width: 1px;
+                height: 200px;
+                border-left: 1px solid rgb(185, 185, 185);
+                margin-left: 40px;
+                margin-right: 40px;
+              "
+            ></div>
+            <div class="content-bottom-text">
+              <span>REVENUE</span>
+              <span class="text-muted" style="font-size: xx-large">n.b.</span>
+              <span>TOTAL NUMBER OF STORES</span>
+              <span style="font-size: xx-large">492</span>
+            </div>
           </div>
+        </div>
+
+        <div class="location">
+          <h4>Top 10 VVO</h4>
+          <ul class="list-group list-group-numbered list-group-flush">
+            <li
+              class="list-group-item d-flex justify-content-between align-items-start"
+            >
+              <div class="ms-2 me-auto">
+                <div>Aldi</div>
+                <i class="bi bi-geo-alt"></i>
+                Schuttersveld 3, 7514AC ENSCHEDE, NL
+              </div>
+              <div class="area">2400m<sup>2</sup></div>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-start"
+            >
+              <div class="ms-2 me-auto">
+                <div>Aldi</div>
+                <i class="bi bi-geo-alt"></i>
+                Schuttersveld 3, 7514AC ENSCHEDE, NL
+              </div>
+              <div class="area">2400m<sup>2</sup></div>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-start"
+            >
+              <div class="ms-2 me-auto">
+                <div>Aldi</div>
+                <i class="bi bi-geo-alt"></i>
+                Schuttersveld 3, 7514AC ENSCHEDE, NL
+              </div>
+              <div class="area">2400m<sup>2</sup></div>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-start"
+            >
+              <div class="ms-2 me-auto">
+                <div>Aldi</div>
+                <i class="bi bi-geo-alt"></i>
+                Schuttersveld 3, 7514AC ENSCHEDE, NL
+              </div>
+              <div class="area">2400m<sup>2</sup></div>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-start"
+            >
+              <div class="ms-2 me-auto">
+                <div>Aldi</div>
+                <i class="bi bi-geo-alt"></i>
+                Schuttersveld 3, 7514AC ENSCHEDE, NL
+              </div>
+              <div class="area">2400m<sup>2</sup></div>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-start"
+            >
+              <div class="ms-2 me-auto">
+                <div>Aldi</div>
+                <i class="bi bi-geo-alt"></i>
+                Schuttersveld 3, 7514AC ENSCHEDE, NL
+              </div>
+              <div class="area">2400m<sup>2</sup></div>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-start"
+            >
+              <div class="ms-2 me-auto">
+                <div>Aldi</div>
+                <i class="bi bi-geo-alt"></i>
+                Schuttersveld 3, 7514AC ENSCHEDE, NL
+              </div>
+              <div class="area">2400m<sup>2</sup></div>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-start"
+            >
+              <div class="ms-2 me-auto">
+                <div>Aldi</div>
+                <i class="bi bi-geo-alt"></i>
+                Schuttersveld 3, 7514AC ENSCHEDE, NL
+              </div>
+              <div class="area">2400m<sup>2</sup></div>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-start"
+            >
+              <div class="ms-2 me-auto">
+                <div>Aldi</div>
+                <i class="bi bi-geo-alt"></i>
+                Schuttersveld 3, 7514AC ENSCHEDE, NL
+              </div>
+              <div class="area">2400m<sup>2</sup></div>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-start"
+            >
+              <div class="ms-2 me-auto">
+                <div>Aldi</div>
+                <i class="bi bi-geo-alt"></i>
+                Schuttersveld 3, 7514AC ENSCHEDE, NL
+              </div>
+              <div class="area">2400m<sup>2</sup></div>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<link
+  rel="stylesheet"
+  href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css"
+/>
